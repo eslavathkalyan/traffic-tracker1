@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardCard from "../components/DashboardCard";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:5001";
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 function DashboardPage() {
   const [trafficData, setTrafficData] = useState([]);
