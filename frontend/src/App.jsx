@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
-
+import TrafficMap from "./components/TrafficMap";
 // API Base URL helper (falls back to local relative paths proxied by Vite/Nginx)
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -674,10 +674,33 @@ function App() {
                       </table>
                     </div>
                   </section>
-                </div>
-              )}
+                                    
 
-              {activeTab === "admin" && (
+                  {/* LIVE TRAFFIC MAP */}
+                  <section
+                    className="tabular-metrics-section"
+                    style={{ marginTop: "30px" }}
+                  >
+                    <div className="section-title-wrap">
+                      <h2>🗺 Live Traffic Map</h2>
+                      <p>OpenStreetMap Integration</p>
+                    </div>
+
+                    <div
+                      style={{
+                        height: "450px",
+                        borderRadius: "12px",
+                        overflow: "hidden"
+                      }}
+                    >
+                      <TrafficMap />
+                    </div>
+                </section>
+
+</div>
+)}
+
+{activeTab === "admin" && (
                 /* VIEW: ADMIN CONFIGURATION CENTER */
                 <div className="admin-view-wrapper">
                   <div className="admin-grid">
