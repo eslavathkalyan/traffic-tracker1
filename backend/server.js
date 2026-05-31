@@ -10,11 +10,19 @@ const app = express();
 const port = process.env.PORT || 5000;
 const JWT_SECRET = process.env.JWT_SECRET || "control-center-secret-key-998877";
 
-app.use(cors());
+app.use(
+  cors({
+    origin: [
+      "http://localhost:5173",
+      "https://traffic-tracker1.vercel.app"
+    ],
+    credentials: true,
+  })
+);
 app.use(express.json());
 
 // Database connection
-const mongoUri = process.env.MONGO_URI || "mongodb://localhost:27017/userssss";
+const mongoUri = process.env.MONGO_URI;
 mongoose
   .connect(mongoUri)
   .then(() => {
@@ -96,8 +104,8 @@ async function runSimulationTick() {
 
       // Calculate vehicles (peak multiplier + noise)
       let activeVehicles = Math.round(
-        route.baseVehicles * 
-        simulatorConfig.peakMultiplier * 
+        route.baseVehicles *
+        simulatorConfig.peakMultiplier *
         (0.85 + Math.random() * 0.3)
       );
       if (route.routeId === "R03") {
@@ -453,7 +461,10 @@ app.post("/api/admin/config", async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error." });
   }
 });
-
+// Root Route
+app.get("/", (req, res) => {
+  res.send("Traffic Tracker Backend Running Successfully 🚀");
+});
 // 7. Health Check
 app.get("/api/health", (req, res) => {
   res.json({ success: true, message: "MERN Operational Engine API is active.", database: mongoose.connection.name });

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import axios from "axios";
 
 // API Base URL helper (falls back to local relative paths proxied by Vite/Nginx)
-const API_URL = ""; 
+const API_URL = import.meta.env.VITE_API_URL;
 
 const routesMetadata = [
   { routeId: "R01", routeName: "Downtown Corridor", baseVehicles: 50, baseSpeed: 70 },
@@ -809,7 +809,7 @@ function App() {
                       <div className="warning-panel">
                         <h4>Security Notice</h4>
                         <p>
-                          Changing simulator variables mutates the live Express pipeline matrix variables immediately. 
+                          Changing simulator variables mutates the live Express pipeline matrix variables immediately.
                           Traffic data points generated subsequently reflect these modified parameters. Keep database limits to 100 entries.
                         </p>
                       </div>
@@ -825,7 +825,7 @@ function App() {
                     <div className="profile-card">
                       <div className="profile-cover"></div>
                       <div className="profile-avatar-big">OP</div>
-                      
+
                       <div className="profile-user-info">
                         <h2>{user?.username || "System Operator"}</h2>
                         <span className="profile-badge">{user?.role || "Control Center Operator"}</span>
