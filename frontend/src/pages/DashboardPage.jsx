@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import DashboardCard from "../components/DashboardCard";
-
+import TrafficMap from "../components/TrafficMap";
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 
 function DashboardPage() {
@@ -122,9 +122,16 @@ function DashboardPage() {
       </DashboardCard>
     </section>
 
-        <small className="updated-time">
-      Last updated: {lastUpdated || "Not updated yet"} | Next refresh in ~5s
-    </small>
+       {/* MAP SECTION */}
+<section style={{ marginTop: "30px" }}>
+  <DashboardCard title="🗺 Live Traffic Map">
+    <TrafficMap />
+  </DashboardCard>
+</section>
+
+<small className="updated-time">
+  Last updated: {lastUpdated || "Not updated yet"} | Next refresh in ~5s
+</small>
   </div>
 );
 }
