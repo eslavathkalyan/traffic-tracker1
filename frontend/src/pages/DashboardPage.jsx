@@ -40,59 +40,93 @@ function DashboardPage() {
   }, []);
 
   return (
-    <div className="page">
-      <header className="page-header">
-        <h1>Live Operations Dashboard</h1>
-        <p>Traffic and transport data auto-refresh every 5 seconds.</p>
-        <div className="live-status">
-          <span className="live-dot" />
-          <span>Live updates active</span>
-        </div>
-      </header>
+  <div className="page">
+    <header className="page-header">
+      <h1>🚦 Traffic Control Command Center</h1>
+      <p>
+        Real-time monitoring of traffic flow, transport systems, and route
+        optimization.
+      </p>
 
-      {isLoading ? <p>Loading dashboard...</p> : null}
-      {error ? <p className="error">{error}</p> : null}
+      <div className="live-status">
+        <span className="live-dot" />
+        <span>Live updates active</span>
+      </div>
+    </header>
 
-      <section className="grid">
-        <DashboardCard title="Traffic Conditions">
-          {trafficData.map((item) => (
-            <div key={item.routeName} className="row">
-              <strong>{item.routeName}</strong>
-              <span>{item.congestionLevel}</span>
-            </div>
-          ))}
-        </DashboardCard>
+    {isLoading ? <p>Loading dashboard...</p> : null}
+    {error ? <p className="error">{error}</p> : null}
 
-        <DashboardCard title="Public Transport Timings">
-          {transportData.map((item) => (
-            <div key={item.lineName} className="row">
-              <strong>{item.lineName}</strong>
-              <span>{item.nextArrivalMinutes} mins</span>
-            </div>
-          ))}
-        </DashboardCard>
+    {/* KPI CARDS */}
+    <section className="grid">
+      <DashboardCard title="🚦 Active Routes">
+        <h2>{trafficData.length}</h2>
+      </DashboardCard>
 
-        <DashboardCard title="Best Route Suggestion">
-          {bestRoute ? (
-            <div className="best-route">
-              <p>
-                <strong>Suggested Route:</strong> {bestRoute.suggestedRoute}
-              </p>
-              <p>
-                <strong>Reason:</strong> {bestRoute.reason}
-              </p>
-            </div>
-          ) : (
-            <p>No suggestion available.</p>
-          )}
-        </DashboardCard>
-      </section>
+      <DashboardCard title="🚌 Transport Units">
+        <h2>{transportData.length}</h2>
+      </DashboardCard>
 
-      <small className="updated-time">
-        Last updated: {lastUpdated || "Not updated yet"} | Next refresh in ~5s
-      </small>
-    </div>
-  );
+      <DashboardCard title="⚡ System Status">
+        <h2 style={{ color: "#10b981" }}>ONLINE</h2>
+      </DashboardCard>
+    </section>
+
+    {/* MAIN DASHBOARD */}
+    <section className="grid">
+      <DashboardCard title="Traffic Conditions">
+        {trafficData.map((item) => (
+          <div key={item.routeName} className="row">
+            <strong>{item.routeName}</strong>
+
+            <span
+              style={{
+                color:
+                  item.congestionLevel === "High"
+                    ? "#ef4444"
+                    : item.congestionLevel === "Medium"
+                    ? "#f59e0b"
+                    : "#10b981"
+              }}
+            >
+              {item.congestionLevel}
+            </span>
+          </div>
+        ))}
+      </DashboardCard>
+
+      <DashboardCard title="Public Transport Timings">
+        {transportData.map((item) => (
+          <div key={item.lineName} className="row">
+            <strong>{item.lineName}</strong>
+            <span>{item.nextArrivalMinutes} mins</span>
+          </div>
+        ))}
+      </DashboardCard>
+
+      <DashboardCard title="Best Route Suggestion">
+        {bestRoute ? (
+          <div className="best-route">
+            <p>
+              <strong>Suggested Route:</strong>{" "}
+              {bestRoute.suggestedRoute}
+            </p>
+
+            <p>
+              <strong>Reason:</strong> {bestRoute.reason}
+            </p>
+          </div>
+        ) : (
+          <p>No suggestion available.</p>
+        )}
+      </DashboardCard>
+    </section>
+
+        <small className="updated-time">
+      Last updated: {lastUpdated || "Not updated yet"} | Next refresh in ~5s
+    </small>
+  </div>
+);
 }
 
 export default DashboardPage;
